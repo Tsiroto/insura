@@ -16,7 +16,7 @@ export default function Wizard() {
                     Welcome to Insura
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
-                    Choose your insurance category to begin. Our wizard will guide you step-by-step.
+                    Get a personalised quote in just 5 minutes.
                 </Typography>
             </Box>
             <WizardTypeSelector />

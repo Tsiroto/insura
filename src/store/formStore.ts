@@ -1,12 +1,13 @@
 import { create } from 'zustand';
+import type { FormFields } from '../types/form';
 
 interface FormState {
     type: string;
     step: number;
-    data: Record<string, any>;
+    data: FormFields;
     setType: (type: string) => void;
     setStep: (step: number) => void;
-    updateData: (newData: Record<string, any>) => void;
+    updateData: (newData: Partial<FormFields>) => void;
     reset: () => void;
 }
 

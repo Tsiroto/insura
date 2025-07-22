@@ -19,8 +19,8 @@ export default function WizardTypeSelector() {
 
     return (
         <Box mt={4}>
-            <Typography variant="h5" align="center" gutterBottom>
-                Select a Type
+            <Typography variant="h6" align="center" color={"textSecondary"} gutterBottom>
+                Select insurance type to proceed
             </Typography>
             <Box
                 sx={{
