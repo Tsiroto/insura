@@ -1,13 +1,16 @@
-import Layout from './components/Layout';
-import { Typography } from '@mui/material';
+import { Routes, Route } from 'react-router-dom';
+import MainLayout from './layouts/MainLayout';
+import Wizard from './pages/insura/Wizard';
+import WizardForm from './pages/insura/WizardForm';
 
 function App() {
     return (
-        <Layout>
-            <Typography variant="body1">
-                Wizard content goes here.
-            </Typography>
-        </Layout>
+        <Routes>
+            <Route path="/insura" element={<MainLayout />}>
+                <Route index element={<Wizard />} />
+                <Route path=":type" element={<WizardForm />} />
+            </Route>
+        </Routes>
     );
 }
 
