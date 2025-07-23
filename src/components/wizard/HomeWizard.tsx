@@ -3,75 +3,166 @@ import {
     Typography,
     Stack,
     Box,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormControl,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import { Controller } from 'react-hook-form';
 import type {
     UseFormRegister,
-    UseFormWatch,
     UseFormStateReturn,
+    UseFormWatch,
+    Control,
 } from 'react-hook-form';
 import type { FormFields } from '../../types/form';
 
 interface HomeWizardProps {
     step: number;
     register: UseFormRegister<FormFields>;
-    watch: UseFormWatch<FormFields>;
     formState: UseFormStateReturn<FormFields>;
+    watch: UseFormWatch<FormFields>;
+    control: Control<FormFields>;
 }
 
 export default function HomeWizard({
-                                       step,
-                                       register,
-                                       watch,
-                                       formState,
-                                   }: HomeWizardProps) {
+    step,
+    register,
+    formState,
+    control,
+}: HomeWizardProps) {
     if (step === 0) {
         return (
             <Stack spacing={2}>
-                <TextField
-                    label="Property Type"
-                    fullWidth
-                    inputRef={(el) => step === 0 && el?.focus()}
-                    {...register('propertyType', { required: 'Required' })}
-                    error={!!formState.errors.propertyType}
-                    helperText={formState.errors.propertyType?.message}
-                />
+                <FormControl fullWidth>
+                    <InputLabel id="property-type-label">Property Type</InputLabel>
+                    <Controller
+                        name="propertyType"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: 'Required' }}
+                        render={({ field }) => (
+                            <Select
+                                labelId="property-type-label"
+                                label="Property Type"
+                                {...field}
+                                error={!!formState.errors.propertyType}
+                            >
+                                <MenuItem value="House">House</MenuItem>
+                                <MenuItem value="Apartment">Apartment</MenuItem>
+                            </Select>
+                        )}
+                    />
+                </FormControl>
                 <TextField
                     label="Square Meters"
                     type="number"
                     fullWidth
+                    inputProps={{ min: 35, max: 200 }}
                     {...register('squareMeters', {
                         required: 'Required',
-                        min: { value: 10, message: 'Too small' },
+                        min: { value: 35, message: 'Min 35' },
+                        max: { value: 200, message: 'Max 200' },
                     })}
                     error={!!formState.errors.squareMeters}
                     helperText={formState.errors.squareMeters?.message}
                 />
-            </Stack>
-        );
-    }
-
-    if (step === 1) {
-        return (
-            <Stack spacing={2}>
+                <FormControl fullWidth>
+                    <InputLabel id="ownership-status-label">Ownership Status</InputLabel>
+                    <Controller
+                        name="ownershipStatus"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: 'Required' }}
+                        render={({ field }) => (
+                            <Select
+                                labelId="ownership-status-label"
+                                label="Ownership Status"
+                                {...field}
+                                error={!!formState.errors.ownershipStatus}
+                            >
+                                <MenuItem value="Owned">Owned</MenuItem>
+                                <MenuItem value="Mortgaged">Mortgaged</MenuItem>
+                                <MenuItem value="Rented">Rented</MenuItem>
+                            </Select>
+                        )}
+                    />
+                </FormControl>
+                <FormControl fullWidth>
+                    <InputLabel id="usage-label">Usage</InputLabel>
+                    <Controller
+                        name="usage"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: 'Required' }}
+                        render={({ field }) => (
+                            <Select
+                                labelId="usage-label"
+                                label="Usage"
+                                {...field}
+                                error={!!formState.errors.usage}
+                            >
+                                <MenuItem value="Main residence">Main residence</MenuItem>
+                                <MenuItem value="Holiday Home">Holiday Home</MenuItem>
+                                <MenuItem value="Rental Property">Rental Property</MenuItem>
+                            </Select>
+                        )}
+                    />
+                </FormControl>
                 <TextField
-                    label="Coverage Amount (€)"
-                    fullWidth
+                    label="Construction Year"
                     type="number"
-                    inputRef={(el) => step === 1 && el?.focus()}
-                    {...register('coverage', {
+                    fullWidth
+                    inputProps={{ min: 1980, max: 2025 }}
+                    {...register('constructionYear', {
                         required: 'Required',
-                        min: { value: 1000, message: 'Too low' },
+                        min: { value: 1980, message: 'Min 1980' },
+                        max: { value: 2025, message: 'Max 2025' },
                     })}
-                    error={!!formState.errors.coverage}
-                    helperText={formState.errors.coverage?.message}
+                    error={!!formState.errors.constructionYear}
+                    helperText={formState.errors.constructionYear?.message}
+                />
+                <TextField
+                    label="Postal Code"
+                    type="number"
+                    fullWidth
+                    {...register('postalCode', { required: 'Required' })}
+                    error={!!formState.errors.postalCode}
+                    helperText={formState.errors.postalCode?.message}
                 />
             </Stack>
         );
     }
-
+    if (step === 1) {
+        return (
+            <Stack spacing={2}>
+                <TextField
+                    label="Name"
+                    fullWidth
+                    autoFocus
+                    {...register('name', { required: 'Required' })}
+                    error={!!formState.errors.name}
+                    helperText={formState.errors.name?.message}
+                />
+                <TextField
+                    label="Email"
+                    fullWidth
+                    type="email"
+                    {...register('email', {
+                        required: 'Required',
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: 'Invalid email',
+                        },
+                    })}
+                    error={!!formState.errors.email}
+                    helperText={formState.errors.email?.message}
+                />
+            </Stack>
+        );
+    }
     if (step === 2) {
-        const data = watch();
         return (
             <Box mt={5} display="flex" justifyContent="center">
                 <Box
@@ -90,22 +181,12 @@ export default function HomeWizard({
                     <Typography variant="h6" gutterBottom color="primary">
                         You're almost done! Here's a summary:
                     </Typography>
-
                     <Box mt={3} textAlign="left">
-                        <Typography sx={{ mb: 1 }}>
-                            <strong>Property Type:</strong> {data.propertyType}
-                        </Typography>
-                        <Typography sx={{ mb: 1 }}>
-                            <strong>Square Meters:</strong> {data.squareMeters} m²
-                        </Typography>
-                        <Typography>
-                            <strong>Coverage:</strong> €{data.coverage}
-                        </Typography>
+                        <Typography>No data to display (fields are cleared on navigation).</Typography>
                     </Box>
                 </Box>
             </Box>
         );
     }
-
     return null;
 }

@@ -36,7 +36,7 @@ export default function CarWizard({
                     type="number"
                     {...register('registrationYear', {
                         required: 'Required',
-                        min: { value: 2001, message: 'Must be after 2000' },
+                        min: { value: 1980, message: 'Must be after 1979' },
                         max: { value: currentYear, message: `Cannot be after ${currentYear}` },
                     })}
                     error={!!formState.errors.registrationYear}

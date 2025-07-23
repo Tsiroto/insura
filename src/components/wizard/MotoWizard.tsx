@@ -7,46 +7,46 @@ import {
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import type {
     UseFormRegister,
-    UseFormWatch,
     UseFormStateReturn,
 } from 'react-hook-form';
 import type { FormFields } from '../../types/form';
+import { useFormStore } from '../../store/formStore';
 
 interface MotoWizardProps {
     step: number;
     register: UseFormRegister<FormFields>;
-    watch: UseFormWatch<FormFields>;
     formState: UseFormStateReturn<FormFields>;
 }
 
-
 export default function MotoWizard({
-                                       step,
-                                       register,
-                                       watch,
-                                       formState,
-                                   }: MotoWizardProps) {
+    step,
+    register,
+    formState,
+}: MotoWizardProps) {
+    const { data } = useFormStore();
+
     if (step === 0) {
         return (
             <Stack spacing={2}>
                 <TextField
-                    label="Moto Model"
+                    label="License Plate"
                     fullWidth
-                    inputRef={(el) => step === 0 && el?.focus()}
-                    {...register('motoModel', { required: 'Required' })}
-                    error={!!formState.errors.motoModel}
-                    helperText={formState.errors.motoModel?.message}
+                    autoFocus
+                    {...register('licensePlate', { required: 'Required' })}
+                    error={!!formState.errors.licensePlate}
+                    helperText={formState.errors.licensePlate?.message}
                 />
                 <TextField
-                    label="Engine Size (cc)"
+                    label="Registration Year"
                     fullWidth
                     type="number"
-                    {...register('engineSize', {
+                    {...register('registrationYear', {
                         required: 'Required',
-                        min: { value: 49, message: 'Must be at least 50cc' },
+                        min: { value: 1980, message: 'Must be after 1979' },
+                        max: { value: new Date().getFullYear(), message: `Cannot be after ${new Date().getFullYear()}` },
                     })}
-                    error={!!formState.errors.engineSize}
-                    helperText={formState.errors.engineSize?.message}
+                    error={!!formState.errors.registrationYear}
+                    helperText={formState.errors.registrationYear?.message}
                 />
             </Stack>
         );
@@ -56,24 +56,32 @@ export default function MotoWizard({
         return (
             <Stack spacing={2}>
                 <TextField
-                    label="Driver Age"
+                    label="Owner Name"
                     fullWidth
-                    type="number"
-                    inputRef={(el) => step === 1 && el?.focus()}
-                    {...register('driverAge', {
+                    autoFocus
+                    {...register('ownerName', { required: 'Required' })}
+                    error={!!formState.errors.ownerName}
+                    helperText={formState.errors.ownerName?.message}
+                />
+                <TextField
+                    label="Email"
+                    fullWidth
+                    type="email"
+                    {...register('email', {
                         required: 'Required',
-                        min: { value: 18, message: 'Must be 18+' },
-                        max: { value: 100, message: 'Really? 😅' },
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: 'Invalid email',
+                        },
                     })}
-                    error={!!formState.errors.driverAge}
-                    helperText={formState.errors.driverAge?.message}
+                    error={!!formState.errors.email}
+                    helperText={formState.errors.email?.message}
                 />
             </Stack>
         );
     }
 
     if (step === 2) {
-        const data = watch();
         return (
             <Box mt={5} display="flex" justifyContent="center">
                 <Box
@@ -92,16 +100,18 @@ export default function MotoWizard({
                     <Typography variant="h6" gutterBottom color="primary">
                         You're almost done! Here's a summary:
                     </Typography>
-
                     <Box mt={3} textAlign="left">
                         <Typography sx={{ mb: 1 }}>
-                            <strong>Moto Model:</strong> {data.motoModel}
+                            <strong>License Plate:</strong> {data.licensePlate}
                         </Typography>
                         <Typography sx={{ mb: 1 }}>
-                            <strong>Engine Size:</strong> {data.engineSize} cc
+                            <strong>Registration Year:</strong> {data.registrationYear}
+                        </Typography>
+                        <Typography sx={{ mb: 1 }}>
+                            <strong>Owner Name:</strong> {data.ownerName}
                         </Typography>
                         <Typography>
-                            <strong>Driver Age:</strong> {data.driverAge}
+                            <strong>Email:</strong> {data.email}
                         </Typography>
                     </Box>
                 </Box>

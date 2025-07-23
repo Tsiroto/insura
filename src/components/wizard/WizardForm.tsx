@@ -21,9 +21,9 @@ import MotoWizard from './MotoWizard';
 import HomeWizard from './HomeWizard';
 
 const stepsByType = {
-    car: ['Insurable Details', 'Owner Info', 'Review'],
-    moto: ['Moto Info', 'Driver Age', 'Review'],
-    home: ['Property Info', 'Coverage', 'Review'],
+    car: ['Vehicle Info', 'Owner Info', 'Review'],
+    moto: ['Vehicle Info', 'Owner Info', 'Review'],
+    home: ['Property Info', 'Contact Info', 'Review'],
 };
 
 // helper to extract only relevant fields for each step
@@ -33,12 +33,12 @@ const stepFields: Record<string, Record<number, (keyof FormFields)[]>> = {
         1: ['ownerName', 'email'],
     },
     moto: {
-        0: ['motoMake', 'engineSize'],
-        1: ['driverAge', 'licenseYears'],
+        0: ['licensePlate', 'registrationYear'],
+        1: ['ownerName', 'email'],
     },
     home: {
-        0: ['address', 'yearBuilt'],
-        1: ['value', 'squareMeters'],
+        0: ['propertyType', 'squareMeters', 'ownershipStatus', 'usage', 'constructionYear', 'postalCode'],
+        1: ['name', 'email'],
     },
 };
 
@@ -54,21 +54,23 @@ export default function WizardForm() {
         trigger,
         reset,
         setFocus,
-        watch,
+        unregister,
         formState,
+        control,
+        watch,
     } = useForm<FormFields>({
         shouldUnregister: true,
     });
 
     const { type: paramType } = useParams();
     const navigate = useNavigate();
-    const { type, step, setType, setStep, updateData, data: formData } = useFormStore();
+    const { type, step, setType, setStep, updateData, data } = useFormStore();
 
     // init once on mount
     useEffect(() => {
         if (paramType) {
             setType(paramType);
-            reset(getStepData(formData, paramType, 0));
+            reset(getStepData(data, paramType, 0));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -81,14 +83,30 @@ export default function WizardForm() {
 
     const steps = stepsByType[type as keyof typeof stepsByType] || [];
 
-    const onSubmit = (data: FormFields) => {
-        const merged = { ...formData, ...data };
-        updateData(merged);
+    const onStepChange = (newStep: number) => {
+        const currentStepKeys = stepFields[type]?.[newStep] || [];
+        // Unregister all possible fields from all steps
+        const allPossibleKeys = Array.from(
+            new Set(Object.values(stepFields[type] || {}).flat())
+        );
+        allPossibleKeys.forEach((k) => {
+            if (!currentStepKeys.includes(k)) unregister(k);
+        });
+        // Only reset with the fields for the new step
+        const cleared: FormFields = {} as FormFields;
+        currentStepKeys.forEach((k) => {
+            cleared[k] = data[k] || '';
+        });
+        reset(cleared);
+    };
 
+    const onSubmit = (formValues: FormFields) => {
+        const merged = { ...data, ...formValues };
+        updateData(merged);
         if (step < steps.length - 1) {
             const nextStep = step + 1;
             setStep(nextStep);
-            reset(getStepData(merged, type, nextStep));
+            onStepChange(nextStep);
         } else {
             navigate('/insura/thank-you');
         }
@@ -135,15 +153,14 @@ export default function WizardForm() {
 
             <Box component="form" mt={4}>
                 {(type === 'car' && (
-                        <CarWizard step={step} register={register} watch={watch} formState={formState} />
+                        <CarWizard step={step} register={register} formState={formState} />
                     )) ||
                     (type === 'moto' && (
-                        <MotoWizard step={step} register={register} watch={watch} formState={formState} />
+                        <MotoWizard step={step} register={register} formState={formState} />
                     )) ||
                     (type === 'home' && (
-                        <HomeWizard step={step} register={register} watch={watch} formState={formState} />
+                        <HomeWizard step={step} register={register} formState={formState} control={control} watch={watch} />
                     ))}
-
                 <Box
                     mt={4}
                     display="flex"
@@ -156,18 +173,12 @@ export default function WizardForm() {
                             onClick={() => {
                                 const prevStep = step - 1;
                                 setStep(prevStep);
-                                reset(getStepData(formData, type, prevStep));
-                            }}
-                            sx={{
-                                minWidth: 120,
-                                textTransform: 'none',
-                                fontWeight: 500,
+                                onStepChange(prevStep);
                             }}
                         >
-                            ← Back
+                            Back
                         </Button>
                     )}
-
                     <Button
                         variant="contained"
                         color="primary"
