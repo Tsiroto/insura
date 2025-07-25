@@ -8,10 +8,11 @@ import {
     IconButton,
     Divider,
 } from '@mui/material';
-import logo from '../../public/logo-t-blue.png';
+import logo from '../assets/logo-white-transparent.png';
 import { useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { BASE_PATH } from '../config/config';
+import * as React from "react";
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -65,27 +66,29 @@ export default function Header() {
                     >
                         <img src={logo} alt="Insura Logo" width={30} height={30} />
                     </Box>
-                    <Typography variant="h6" fontWeight={600} color="#0a4c94">
+                    <Typography variant="h6" fontWeight={600} color="#fff">
                         Insura
                     </Typography>
                 </Box>
 
                 <Box display="flex" alignItems="center" gap={2}>
-                    <Typography variant="h6" fontWeight={500} color="#0a4c94">
+                    <Typography variant="h6" fontWeight={500} color="#fff">
                         Projects
                     </Typography>
                     <IconButton 
                         onClick={handleOpenMenu} 
                         sx={{ 
-                            color: '#0a4c94',
-                            backgroundColor: '#e6f0fa',
+                            color: '#fff',
+                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            backdropFilter: 'blur(10px)',
                             borderRadius: '50%',
-                            transition: 'all 0.3s ease',
+                            transition: 'all 0.2s ease-in-out',
                             '&:hover': {
-                                backgroundColor: '#d1e3f5',
+                                backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                                boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
                             },
                             '&:active': {
-                                backgroundColor: '#c2d9f0',
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             }
                         }}
                     >
@@ -99,10 +102,14 @@ export default function Header() {
                             elevation: 1,
                             sx: {
                                 borderRadius: 1,
-                                backgroundColor: '#e6f0fa',
+                                backgroundColor: 'rgba(205, 205, 205, 0.3)',
+                                backdropFilter: 'blur(6px)',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.3)',
                                 overflow: 'hidden',
-                                mt: 1.5,
-                                py: 0
+                                mt: 1,
+                                py: 0,
+                                // color: '#fff'
                             }
                         }}
                     >

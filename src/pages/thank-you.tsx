@@ -22,7 +22,7 @@ export default function ThankYou() {
             textAlign="center"
             px={3}
         >
-            <CheckCircleOutlineIcon color="primary" sx={{ fontSize: 64, mb: 2 }} />
+            <CheckCircleOutlineIcon color="secondary" sx={{ fontSize: 64, mb: 2 }} />
             <Typography variant="h5" fontWeight={600} gutterBottom>
                 Thank you for your submission!
             </Typography>

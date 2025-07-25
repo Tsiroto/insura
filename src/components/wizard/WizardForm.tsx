@@ -137,12 +137,14 @@ export default function WizardForm() {
             px={3} 
             onKeyDown={handleKeyDown}
             sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
                 backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
-                borderRadius: 8,
+                borderRadius: '10px',
+                borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',
                 p: 4,
+                transition: 'all 0.2s ease-in-out',
             }}
         >
             <Box 
@@ -153,9 +155,12 @@ export default function WizardForm() {
                 mb={3}
                 sx={{
                     p: 2,
-                    borderRadius: 4,
-                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    // borderRadius: 10,
+                    // backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                    // backdropFilter: 'blur(10px)',
+                    // borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+                    // borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+                    // boxShadow: '10px 10px 20px -6px rgba(0, 0, 0, 0.2)',
                 }}
             >
                 <Box 
@@ -166,10 +171,10 @@ export default function WizardForm() {
                         width: 50,
                         height: 50,
                         borderRadius: '50%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                        color: 'primary.main',
+                        // backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                        // backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(255, 255, 255, 0.4)',
+                        color: 'secondary.main',
                     }}
                 >
                     {renderIcon()}
@@ -182,9 +187,12 @@ export default function WizardForm() {
             <Box 
                 sx={{ 
                     p: 2, 
-                    borderRadius: 8,
-                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                    backdropFilter: 'blur(10px)',
+                    borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+                    boxShadow: '10px 10px 20px -6px rgba(0, 0, 0, 0.2)',
                     mb: 3
                 }}
             >
@@ -193,10 +201,10 @@ export default function WizardForm() {
                     alternativeLabel
                     sx={{
                         '& .MuiStepConnector-line': {
-                            borderColor: 'rgba(0, 111, 234, 0.2)',
+                            borderColor: 'rgba(0, 111, 234, 0.3)',
                         },
                         '& .MuiStepIcon-root': {
-                            color: 'rgba(255, 255, 255, 0.5)',
+                            color: 'rgba(205, 205, 205, 0.2)',
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             backdropFilter: 'blur(5px)',
                             borderRadius: '50%',
@@ -233,11 +241,11 @@ export default function WizardForm() {
                     sx={{ 
                         mt: 2,
                         height: 8,
-                        borderRadius: 8,
+                        borderRadius: '10px',
                         backgroundColor: 'rgba(255, 255, 255, 0.15)',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         '& .MuiLinearProgress-bar': {
-                            borderRadius: 8,
+                            borderRadius: 10,
                             backgroundColor: 'primary.main',
                         }
                     }}
@@ -250,12 +258,11 @@ export default function WizardForm() {
                 sx={{
                     '& .MuiTextField-root': {
                         mb: 3,
-                        maxWidth: '500px',
                         width: '100%',
                         mx: 'auto',
                         display: 'block',
                         '& .MuiOutlinedInput-root': {
-                            borderRadius: 20,
+                            borderRadius: '10px',
                             backgroundColor: 'rgba(255, 255, 255, 0.15)',
                             border: '1px solid rgba(255, 255, 255, 0.2)',
                             backdropFilter: 'blur(5px)',
@@ -272,7 +279,6 @@ export default function WizardForm() {
                     },
                     '& .MuiFormControl-root': {
                         mb: 3,
-                        maxWidth: '500px',
                         width: '100%',
                         mx: 'auto',
                         display: 'block',
@@ -304,11 +310,21 @@ export default function WizardForm() {
                             sx={{
                                 minWidth: 120,
                                 fontWeight: 500,
-                                borderColor: 'transparent',
-                                color: 'text.secondary',
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                backdropFilter: 'blur(10px)',
+                                // borderRadius: '5000px',
+                                borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+                                borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+                                boxShadow: '10px 10px 20px -6px rgba(0, 0, 0, 0.2)',
+                                transition: 'all 0.2s ease-in-out',
+                                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
+                                color: '#fff',
                                 '&:hover': {
-                                    borderColor: 'transparent',
-                                    color: 'primary.main',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                    boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
+                                },
+                                '&:active': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
                                 }
                             }}
                         >
@@ -321,17 +337,21 @@ export default function WizardForm() {
                         sx={{
                             minWidth: 120,
                             fontWeight: 500,
-                            backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                            backgroundColor: 'rgba(255, 255, 255, 0.3)',
                             backdropFilter: 'blur(10px)',
-                            border: '1px solid rgba(255, 255, 255, 0.3)',
-                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+                            // borderRadius: '5000px',
+                            borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+                            borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+                            boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',
+                            transition: 'all 0.2s ease-in-out',
+                            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
                             '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.35)',
-                                boxShadow: '0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)',
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
                             },
                             '&:active': {
                                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) inset',
+                                boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
                             }
                         }}
                     >

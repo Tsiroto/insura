@@ -26,6 +26,7 @@ export default function CarWizard({
                     label="License Plate"
                     fullWidth
                     autoFocus
+                    InputLabelProps={{ shrink: true }}
                     {...register('licensePlate', { required: 'Required' })}
                     error={!!formState.errors.licensePlate}
                     helperText={formState.errors.licensePlate?.message}
@@ -34,6 +35,7 @@ export default function CarWizard({
                     label="Registration Year"
                     fullWidth
                     type="number"
+                    InputLabelProps={{ shrink: true }}
                     {...register('registrationYear', {
                         required: 'Required',
                         min: { value: 1980, message: 'Must be after 1979' },
@@ -53,6 +55,7 @@ export default function CarWizard({
                     label="Owner Name"
                     fullWidth
                     autoFocus
+                    InputLabelProps={{ shrink: true }}
                     {...register('ownerName', { required: 'Required' })}
                     error={!!formState.errors.ownerName}
                     helperText={formState.errors.ownerName?.message}
@@ -61,6 +64,7 @@ export default function CarWizard({
                     label="Email"
                     fullWidth
                     type="email"
+                    InputLabelProps={{ shrink: true }}
                     {...register('email', {
                         required: 'Required',
                         pattern: {
@@ -90,8 +94,8 @@ export default function CarWizard({
                         textAlign: 'center',
                     })}
                 >
-                    <DirectionsCarIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
-                    <Typography variant="h6" gutterBottom color="primary">
+                    <DirectionsCarIcon sx={{ fontSize: 40, color: 'secondary.main', mb: 1 }} />
+                    <Typography variant="h6" gutterBottom color="secondary">
                         You're almost done! Here's a summary:
                     </Typography>
 

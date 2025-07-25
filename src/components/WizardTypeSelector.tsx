@@ -19,7 +19,14 @@ export default function WizardTypeSelector() {
 
     return (
         <Box mt={4} width="100%">
-            <Typography variant="h6" align="center" color="text.primary" fontWeight="medium" gutterBottom>
+            <Typography 
+                variant="h6" 
+                align="center" 
+                color="#fff" 
+                fontWeight="medium" 
+                gutterBottom
+                sx={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)' }}
+            >
                 Select insurance type to proceed
             </Typography>
             <Box
@@ -38,27 +45,28 @@ export default function WizardTypeSelector() {
                                 width: '100%',
                                 maxWidth: 260,
                                 minWidth: 220,
-                                transition: 'all 0.3s ease',
-                                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                                transition: 'all 0.2s ease-in-out',
+                                backgroundColor: 'rgba(255, 255, 255, 0.3)',
                                 backdropFilter: 'blur(10px)',
-                                border: '1px solid rgba(255, 255, 255, 0.3)',
-                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
-                                borderRadius: 4,
+                                // borderRadius: '20px',
+                                borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+                                borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+                                boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',
                                 overflow: 'hidden',
+                                position: 'relative',
                                 '&:hover': {
-                                    transform: 'translateY(-5px)',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.35)',
-                                    boxShadow: '0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                    boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
                                     '& .cardContent': {
-                                        color: 'primary.main',
+                                        color: '#fff',
                                     },
                                     '& .cardIcon': {
-                                        color: 'primary.main',
+                                        color: '#fff',
                                     }
                                 },
                                 '&:active': {
                                     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) inset',
+                                    boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
                                     transform: 'translateY(0)',
                                 }
                             }}
@@ -82,11 +90,12 @@ export default function WizardTypeSelector() {
                                     sx={{
                                         textAlign: 'center',
                                         py: 4,
-                                        color: 'text.secondary',
-                                        transition: 'color 0.3s ease',
+                                        color: '#fff',
+                                        transition: 'color 0.2s ease-in-out',
+                                        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
                                     }}
                                 >
-                                    <Box mb={2} className="cardIcon" sx={{ color: 'text.secondary', transition: 'color 0.3s ease' }}>
+                                    <Box mb={2} className="cardIcon" sx={{ color: '#fff', transition: 'color 0.2s ease-in-out' }}>
                                         <IconComponent fontSize="large" />
                                     </Box>
                                     <Typography variant="h6" fontWeight="medium">{item.label}</Typography>

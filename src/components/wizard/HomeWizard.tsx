@@ -177,8 +177,8 @@ export default function HomeWizard({
                         textAlign: 'center',
                     })}
                 >
-                    <HomeIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
-                    <Typography variant="h6" gutterBottom color="primary">
+                    <HomeIcon sx={{ fontSize: 40, color: 'secondary.main', mb: 1 }} />
+                    <Typography variant="h6" gutterBottom color="secondary">
                         You're almost done! Here's a summary:
                     </Typography>
                     <Box mt={3} textAlign="left">
