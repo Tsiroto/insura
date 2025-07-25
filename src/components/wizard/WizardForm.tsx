@@ -129,29 +129,156 @@ export default function WizardForm() {
     };
 
     return (
-        <Box maxWidth="sm" mx="auto" mt={4} px={2} onKeyDown={handleKeyDown}>
-            <Box display="flex" justifyContent="center" alignItems="center" gap={1} mb={2}>
-                {renderIcon()}
-                <Typography variant="h6">
+        <Box 
+            maxWidth="md" 
+            width="100%"
+            mx="auto" 
+            mt={4} 
+            px={3} 
+            onKeyDown={handleKeyDown}
+            sx={{
+                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+                borderRadius: 8,
+                p: 4,
+            }}
+        >
+            <Box 
+                display="flex" 
+                justifyContent="center" 
+                alignItems="center" 
+                gap={2} 
+                mb={3}
+                sx={{
+                    p: 2,
+                    borderRadius: 4,
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                }}
+            >
+                <Box 
+                    sx={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 50,
+                        height: 50,
+                        borderRadius: '50%',
+                        backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        color: 'primary.main',
+                    }}
+                >
+                    {renderIcon()}
+                </Box>
+                <Typography variant="h6" fontWeight={500} color="text.primary">
                     Tell us about your {type}
                 </Typography>
             </Box>
 
-            <Stepper activeStep={step} alternativeLabel>
-                {steps.map((label) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
+            <Box 
+                sx={{ 
+                    p: 2, 
+                    borderRadius: 8,
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    mb: 3
+                }}
+            >
+                <Stepper 
+                    activeStep={step} 
+                    alternativeLabel
+                    sx={{
+                        '& .MuiStepConnector-line': {
+                            borderColor: 'rgba(0, 111, 234, 0.2)',
+                        },
+                        '& .MuiStepIcon-root': {
+                            color: 'rgba(255, 255, 255, 0.5)',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            backdropFilter: 'blur(5px)',
+                            borderRadius: '50%',
+                        },
+                        '& .MuiStepIcon-root.Mui-active': {
+                            color: 'primary.main',
+                            backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                            backdropFilter: 'blur(10px)',
+                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                        },
+                        '& .MuiStepIcon-root.Mui-completed': {
+                            color: 'primary.light',
+                        },
+                        '& .MuiStepLabel-label': {
+                            color: 'text.secondary',
+                            mt: 1,
+                        },
+                        '& .MuiStepLabel-label.Mui-active': {
+                            color: 'text.primary',
+                            fontWeight: 500,
+                        },
+                    }}
+                >
+                    {steps.map((label) => (
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
 
-            <LinearProgress
-                variant="determinate"
-                value={((step + 1) / steps.length) * 100}
-                sx={{ mt: 2 }}
-            />
+                <LinearProgress
+                    variant="determinate"
+                    value={((step + 1) / steps.length) * 100}
+                    sx={{ 
+                        mt: 2,
+                        height: 8,
+                        borderRadius: 8,
+                        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        '& .MuiLinearProgress-bar': {
+                            borderRadius: 8,
+                            backgroundColor: 'primary.main',
+                        }
+                    }}
+                />
+            </Box>
 
-            <Box component="form" mt={4}>
+            <Box 
+                component="form" 
+                mt={4}
+                sx={{
+                    '& .MuiTextField-root': {
+                        mb: 3,
+                        maxWidth: '500px',
+                        width: '100%',
+                        mx: 'auto',
+                        display: 'block',
+                        '& .MuiOutlinedInput-root': {
+                            borderRadius: 20,
+                            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                            border: '1px solid rgba(255, 255, 255, 0.2)',
+                            backdropFilter: 'blur(5px)',
+                            '& fieldset': {
+                                borderColor: 'transparent',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: 'primary.light',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: 'primary.main',
+                            },
+                        },
+                    },
+                    '& .MuiFormControl-root': {
+                        mb: 3,
+                        maxWidth: '500px',
+                        width: '100%',
+                        mx: 'auto',
+                        display: 'block',
+                    }
+                }}
+            >
                 {(type === 'car' && (
                         <CarWizard step={step} register={register} formState={formState} />
                     )) ||
@@ -169,24 +296,43 @@ export default function WizardForm() {
                     {step > 0 && (
                         <Button
                             variant="outlined"
-                            color="primary"
                             onClick={() => {
                                 const prevStep = step - 1;
                                 setStep(prevStep);
                                 onStepChange(prevStep);
                             }}
+                            sx={{
+                                minWidth: 120,
+                                fontWeight: 500,
+                                borderColor: 'transparent',
+                                color: 'text.secondary',
+                                '&:hover': {
+                                    borderColor: 'transparent',
+                                    color: 'primary.main',
+                                }
+                            }}
                         >
-                            Back
+                            ← Back
                         </Button>
                     )}
                     <Button
                         variant="contained"
-                        color="primary"
                         onClick={handleSubmit(onSubmit)}
                         sx={{
                             minWidth: 120,
-                            textTransform: 'none',
                             fontWeight: 500,
+                            backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                            backdropFilter: 'blur(10px)',
+                            border: '1px solid rgba(255, 255, 255, 0.3)',
+                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                                boxShadow: '0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)',
+                            },
+                            '&:active': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) inset',
+                            }
                         }}
                     >
                         {step === steps.length - 1 ? '✓ Submit' : 'Next →'}

@@ -5,9 +5,9 @@ import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import { useNavigate } from 'react-router-dom';
 
 const wizardTypes = [
-    { label: 'Car', icon: <DirectionsCarIcon fontSize="large" color="primary" />, type: 'car' },
-    { label: 'Motorcycle', icon: <TwoWheelerIcon fontSize="large" color="primary" />, type: 'moto' },
-    { label: 'Home', icon: <HomeWorkIcon fontSize="large" color="primary" />, type: 'home' },
+    { label: 'Car', icon: DirectionsCarIcon, type: 'car' },
+    { label: 'Motorcycle', icon: TwoWheelerIcon, type: 'moto' },
+    { label: 'Home', icon: HomeWorkIcon, type: 'home' },
 ];
 
 export default function WizardTypeSelector() {
@@ -18,50 +18,83 @@ export default function WizardTypeSelector() {
     };
 
     return (
-        <Box mt={4}>
-            <Typography variant="h6" align="center" color={"textSecondary"} gutterBottom>
+        <Box mt={4} width="100%">
+            <Typography variant="h6" align="center" color="text.primary" fontWeight="medium" gutterBottom>
                 Select insurance type to proceed
             </Typography>
             <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    gap: 3,
-                    mt: 3,
-                }}
+                display="flex"
+                flexWrap="wrap"
+                justifyContent="center"
+                gap={3}
+                mt={3}
             >
-                {wizardTypes.map((item) => (
-                    <Card
-                        key={item.type}
-                        sx={{
-                            flex: '1 1 250px',
-                            maxWidth: 300,
-                            transition: 'transform 0.2s ease',
-                            backgroundColor: 'transparent',
-                        }}
-                    >
-                        <CardActionArea
-                            onClick={() => handleSelect(item.type)}
-                            disableRipple
-                            disableTouchRipple
+                {wizardTypes.map((item) => {
+                    const IconComponent = item.icon;
+                    return (
+                        <Card
+                            key={item.type}
                             sx={{
-                                backgroundColor: 'transparent',
+                                width: '100%',
+                                maxWidth: 260,
+                                minWidth: 220,
+                                transition: 'all 0.3s ease',
+                                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                                backdropFilter: 'blur(10px)',
+                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+                                borderRadius: 4,
+                                overflow: 'hidden',
                                 '&:hover': {
-                                    backgroundColor: 'transparent !important',
+                                    transform: 'translateY(-5px)',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                                    boxShadow: '0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)',
+                                    '& .cardContent': {
+                                        color: 'primary.main',
+                                    },
+                                    '& .cardIcon': {
+                                        color: 'primary.main',
+                                    }
                                 },
-                                '& .MuiTouchRipple-root': {
-                                    display: 'none',
-                                },
+                                '&:active': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) inset',
+                                    transform: 'translateY(0)',
+                                }
                             }}
                         >
-                            <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                                <Box mb={1}>{item.icon}</Box>
-                                <Typography variant="h6" color="primary">{item.label}</Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                ))}
+                            <CardActionArea
+                                onClick={() => handleSelect(item.type)}
+                                disableRipple
+                                disableTouchRipple
+                                sx={{
+                                    backgroundColor: 'transparent',
+                                    '&:hover': {
+                                        backgroundColor: 'transparent !important',
+                                    },
+                                    '& .MuiTouchRipple-root': {
+                                        display: 'none',
+                                    },
+                                }}
+                            >
+                                <CardContent
+                                    className="cardContent"
+                                    sx={{
+                                        textAlign: 'center',
+                                        py: 4,
+                                        color: 'text.secondary',
+                                        transition: 'color 0.3s ease',
+                                    }}
+                                >
+                                    <Box mb={2} className="cardIcon" sx={{ color: 'text.secondary', transition: 'color 0.3s ease' }}>
+                                        <IconComponent fontSize="large" />
+                                    </Box>
+                                    <Typography variant="h6" fontWeight="medium">{item.label}</Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    );
+                })}
             </Box>
         </Box>
     );
