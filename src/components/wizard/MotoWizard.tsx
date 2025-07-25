@@ -1,9 +1,4 @@
-import {
-    TextField,
-    Typography,
-    Stack,
-    Box,
-} from '@mui/material';
+import { TextField, Stack } from '@mui/material';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import type {
     UseFormRegister,
@@ -11,6 +6,8 @@ import type {
 } from 'react-hook-form';
 import type { FormFields } from '../../types/form';
 import { useFormStore } from '../../store/formStore';
+import ContactInfoStep from './steps/ContactInfoStep';
+import SummaryStep from './steps/SummaryStep';
 
 interface MotoWizardProps {
     step: number;
@@ -32,7 +29,6 @@ export default function MotoWizard({
                     label="License Plate"
                     fullWidth
                     autoFocus
-                    InputLabelProps={{ shrink: true }}
                     {...register('licensePlate', { required: 'Required' })}
                     error={!!formState.errors.licensePlate}
                     helperText={formState.errors.licensePlate?.message}
@@ -41,7 +37,6 @@ export default function MotoWizard({
                     label="Registration Year"
                     fullWidth
                     type="number"
-                    InputLabelProps={{ shrink: true }}
                     {...register('registrationYear', {
                         required: 'Required',
                         min: { value: 1980, message: 'Must be after 1979' },
@@ -55,71 +50,20 @@ export default function MotoWizard({
     }
 
     if (step === 1) {
-        return (
-            <Stack spacing={2}>
-                <TextField
-                    label="Owner Name"
-                    fullWidth
-                    autoFocus
-                    InputLabelProps={{ shrink: true }}
-                    {...register('ownerName', { required: 'Required' })}
-                    error={!!formState.errors.ownerName}
-                    helperText={formState.errors.ownerName?.message}
-                />
-                <TextField
-                    label="Email"
-                    fullWidth
-                    type="email"
-                    InputLabelProps={{ shrink: true }}
-                    {...register('email', {
-                        required: 'Required',
-                        pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: 'Invalid email',
-                        },
-                    })}
-                    error={!!formState.errors.email}
-                    helperText={formState.errors.email?.message}
-                />
-            </Stack>
-        );
+        return <ContactInfoStep register={register} formState={formState} nameField="ownerName" />;
     }
 
     if (step === 2) {
         return (
-            <Box mt={5} display="flex" justifyContent="center">
-                <Box
-                    sx={(theme) => ({
-                        width: '100%',
-                        maxWidth: 480,
-                        border: `1px solid ${theme.palette.divider}`,
-                        borderRadius: 1,
-                        boxShadow: theme.shadows[1],
-                        px: 4,
-                        py: 5,
-                        textAlign: 'center',
-                    })}
-                >
-                    <TwoWheelerIcon sx={{ fontSize: 40, color: 'secondary.main', mb: 1 }} />
-                    <Typography variant="h6" gutterBottom color="secondary">
-                        You're almost done! Here's a summary:
-                    </Typography>
-                    <Box mt={3} textAlign="left">
-                        <Typography sx={{ mb: 1 }}>
-                            <strong>License Plate:</strong> {data.licensePlate}
-                        </Typography>
-                        <Typography sx={{ mb: 1 }}>
-                            <strong>Registration Year:</strong> {data.registrationYear}
-                        </Typography>
-                        <Typography sx={{ mb: 1 }}>
-                            <strong>Owner Name:</strong> {data.ownerName}
-                        </Typography>
-                        <Typography>
-                            <strong>Email:</strong> {data.email}
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>
+            <SummaryStep 
+                icon={<TwoWheelerIcon />}
+                fields={[
+                    { label: 'License Plate', value: data.licensePlate },
+                    { label: 'Registration Year', value: data.registrationYear },
+                    { label: 'Owner Name', value: data.ownerName },
+                    { label: 'Email', value: data.email }
+                ]}
+            />
         );
     }
 

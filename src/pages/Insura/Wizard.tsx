@@ -10,21 +10,26 @@ export default function Wizard() {
         reset();
     }, [reset]);
     return (
-        <Box minHeight="100%" display="flex" flexDirection="column" justifyContent="center" alignItems="center" width="100%">
-            <Paper 
+        <Box
+            minHeight="100%"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            width="100%"
+        >
+            <Paper
                 elevation={0}
-                sx={{ 
-                    mb: 5, 
-                    textAlign: 'center', 
-                    width: '100%', 
-                    maxWidth: 600,
+                sx={{
+                    mb: 5,
+                    textAlign: 'center',
+                    width: '100%',
                     mx: 'auto',
                     p: 4,
-                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    // boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)',
-                    borderRadius: 2
+                    backgroundColor: 'transparent',
+                    backdropFilter: 'blur(2px)',
+                    border: 0,
+                    boxShadow : 'none',
                 }}
             >
                 <Typography variant="h5" fontWeight={500} color="text.primary" gutterBottom>

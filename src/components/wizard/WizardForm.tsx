@@ -19,6 +19,7 @@ import * as React from 'react';
 import CarWizard from './CarWizard';
 import MotoWizard from './MotoWizard';
 import HomeWizard from './HomeWizard';
+import { BASE_PATH } from '../../config/config';
 
 const stepsByType = {
     car: ['Vehicle Info', 'Owner Info', 'Review'],
@@ -155,12 +156,6 @@ export default function WizardForm() {
                 mb={3}
                 sx={{
                     p: 2,
-                    // borderRadius: 10,
-                    // backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                    // backdropFilter: 'blur(10px)',
-                    // borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
-                    // borderTop: '1px solid rgba(255, 255, 255, 0.3)',
-                    // boxShadow: '10px 10px 20px -6px rgba(0, 0, 0, 0.2)',
                 }}
             >
                 <Box 
@@ -171,8 +166,6 @@ export default function WizardForm() {
                         width: 50,
                         height: 50,
                         borderRadius: '50%',
-                        // backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                        // backdropFilter: 'blur(10px)',
                         border: '1px solid rgba(255, 255, 255, 0.4)',
                         color: 'secondary.main',
                     }}
@@ -297,40 +290,35 @@ export default function WizardForm() {
                 <Box
                     mt={4}
                     display="flex"
-                    justifyContent={step === 0 ? 'flex-end' : 'space-between'}
+                    justifyContent="space-between"
                 >
-                    {step > 0 && (
-                        <Button
-                            variant="outlined"
-                            onClick={() => {
-                                const prevStep = step - 1;
-                                setStep(prevStep);
-                                onStepChange(prevStep);
-                            }}
-                            sx={{
-                                minWidth: 120,
-                                fontWeight: 500,
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            navigate(BASE_PATH);
+                        }}
+                        sx={{
+                            minWidth: 120,
+                            fontWeight: 500,
+                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            backdropFilter: 'blur(10px)',
+                            borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+                            borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+                            boxShadow: '10px 10px 20px -6px rgba(0, 0, 0, 0.2)',
+                            transition: 'all 0.2s ease-in-out',
+                            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
+                            color: '#fff',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
+                            },
+                            '&:active': {
                                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                backdropFilter: 'blur(10px)',
-                                // borderRadius: '5000px',
-                                borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
-                                borderTop: '1px solid rgba(255, 255, 255, 0.3)',
-                                boxShadow: '10px 10px 20px -6px rgba(0, 0, 0, 0.2)',
-                                transition: 'all 0.2s ease-in-out',
-                                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
-                                color: '#fff',
-                                '&:hover': {
-                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                    boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
-                                },
-                                '&:active': {
-                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                }
-                            }}
-                        >
-                            ← Back
-                        </Button>
-                    )}
+                            }
+                        }}
+                    >
+                        Start Over
+                    </Button>
                     <Button
                         variant="contained"
                         onClick={handleSubmit(onSubmit)}
@@ -339,7 +327,6 @@ export default function WizardForm() {
                             fontWeight: 500,
                             backgroundColor: 'rgba(255, 255, 255, 0.3)',
                             backdropFilter: 'blur(10px)',
-                            // borderRadius: '5000px',
                             borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
                             borderTop: '1px solid rgba(255, 255, 255, 0.3)',
                             boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',

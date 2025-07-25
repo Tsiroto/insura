@@ -46,16 +46,15 @@ export default function WizardTypeSelector() {
                                 maxWidth: 260,
                                 minWidth: 220,
                                 transition: 'all 0.2s ease-in-out',
-                                backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                                 backdropFilter: 'blur(10px)',
-                                // borderRadius: '20px',
                                 borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
                                 borderTop: '1px solid rgba(255, 255, 255, 0.3)',
                                 boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',
                                 overflow: 'hidden',
                                 position: 'relative',
                                 '&:hover': {
-                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
                                     boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
                                     '& .cardContent': {
                                         color: '#fff',
@@ -67,7 +66,6 @@ export default function WizardTypeSelector() {
                                 '&:active': {
                                     backgroundColor: 'rgba(255, 255, 255, 0.2)',
                                     boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
-                                    transform: 'translateY(0)',
                                 }
                             }}
                         >

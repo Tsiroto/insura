@@ -1,8 +1,6 @@
 import {
     TextField,
-    Typography,
     Stack,
-    Box,
     MenuItem,
     Select,
     InputLabel,
@@ -17,6 +15,8 @@ import type {
     Control,
 } from 'react-hook-form';
 import type { FormFields } from '../../types/form';
+import ContactInfoStep from './steps/ContactInfoStep';
+import SummaryStep from './steps/SummaryStep';
 
 interface HomeWizardProps {
     step: number;
@@ -44,6 +44,11 @@ export default function HomeWizard({
                         rules={{ required: 'Required' }}
                         render={({ field }) => (
                             <Select
+                                sx={{
+                                    '& .MuiSelect-select': {
+                                        color: '#ffffff',
+                                    },
+                                }}
                                 labelId="property-type-label"
                                 label="Property Type"
                                 {...field}
@@ -77,6 +82,11 @@ export default function HomeWizard({
                         rules={{ required: 'Required' }}
                         render={({ field }) => (
                             <Select
+                                sx={{
+                                    '& .MuiSelect-select': {
+                                        color: '#ffffff',
+                                    },
+                                }}
                                 labelId="ownership-status-label"
                                 label="Ownership Status"
                                 {...field}
@@ -98,14 +108,19 @@ export default function HomeWizard({
                         rules={{ required: 'Required' }}
                         render={({ field }) => (
                             <Select
+                                sx={{
+                                    '& .MuiSelect-select': {
+                                        color: '#ffffff',
+                                    },
+                                }}
                                 labelId="usage-label"
                                 label="Usage"
                                 {...field}
                                 error={!!formState.errors.usage}
                             >
-                                <MenuItem value="Main residence">Main residence</MenuItem>
-                                <MenuItem value="Holiday Home">Holiday Home</MenuItem>
-                                <MenuItem value="Rental Property">Rental Property</MenuItem>
+                                <MenuItem value="Main residence" color="#353535">Main residence</MenuItem>
+                                <MenuItem value="Holiday Home" color="#353535">Holiday Home</MenuItem>
+                                <MenuItem value="Rental Property" color="#353535">Rental Property</MenuItem>
                             </Select>
                         )}
                     />
@@ -135,57 +150,14 @@ export default function HomeWizard({
         );
     }
     if (step === 1) {
-        return (
-            <Stack spacing={2}>
-                <TextField
-                    label="Name"
-                    fullWidth
-                    autoFocus
-                    {...register('name', { required: 'Required' })}
-                    error={!!formState.errors.name}
-                    helperText={formState.errors.name?.message}
-                />
-                <TextField
-                    label="Email"
-                    fullWidth
-                    type="email"
-                    {...register('email', {
-                        required: 'Required',
-                        pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: 'Invalid email',
-                        },
-                    })}
-                    error={!!formState.errors.email}
-                    helperText={formState.errors.email?.message}
-                />
-            </Stack>
-        );
+        return <ContactInfoStep register={register} formState={formState} nameField="name" />;
     }
     if (step === 2) {
         return (
-            <Box mt={5} display="flex" justifyContent="center">
-                <Box
-                    sx={(theme) => ({
-                        width: '100%',
-                        maxWidth: 480,
-                        border: `1px solid ${theme.palette.divider}`,
-                        borderRadius: 1,
-                        boxShadow: theme.shadows[1],
-                        px: 4,
-                        py: 5,
-                        textAlign: 'center',
-                    })}
-                >
-                    <HomeIcon sx={{ fontSize: 40, color: 'secondary.main', mb: 1 }} />
-                    <Typography variant="h6" gutterBottom color="secondary">
-                        You're almost done! Here's a summary:
-                    </Typography>
-                    <Box mt={3} textAlign="left">
-                        <Typography>No data to display (fields are cleared on navigation).</Typography>
-                    </Box>
-                </Box>
-            </Box>
+            <SummaryStep 
+                icon={<HomeIcon />}
+                message="No data to display (fields are cleared on navigation)."
+            />
         );
     }
     return null;

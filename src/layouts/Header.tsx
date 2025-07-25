@@ -102,14 +102,14 @@ export default function Header() {
                             elevation: 1,
                             sx: {
                                 borderRadius: 1,
-                                backgroundColor: 'rgba(205, 205, 205, 0.3)',
+                                backgroundColor: 'rgba(255, 255, 255, 0.4)',
                                 backdropFilter: 'blur(6px)',
                                 border: '1px solid rgba(255, 255, 255, 0.2)',
                                 boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.3)',
                                 overflow: 'hidden',
                                 mt: 1,
                                 py: 0,
-                                // color: '#fff'
+                                color: '#fff'
                             }
                         }}
                     >

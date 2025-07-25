@@ -20,27 +20,6 @@ const glassmorphismActive = {
     boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
 };
 
-const dropStyles = {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
-    borderRadius: '20px',
-    borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-    borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-    boxShadow: '10px 10px 60px -8px rgba(0, 0, 0, 0.2)',
-    position: 'absolute',
-    transition: 'all 0.2s ease',
-};
-
-const cardDropStyles = {
-    // backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    // backdropFilter: 'blur(12px)',
-    borderRadius: '50%',
-    borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-    borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-    boxShadow: '10px 10px 60px -8px rgba(0, 0, 0, 0.2)',
-    position: 'absolute',
-    transition: 'all 0.2s ease',
-};
 
 const theme = createTheme({
     palette: {
@@ -100,12 +79,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     textTransform: 'none',
-                    // borderRadius: 5000,
                     padding: '1em',
-                    // color: '#fff',
-                    // fontWeight: 500,
-                    // width: 150,
-                    // fontSize: '1rem',
                     ...glassmorphism,
                     transition: 'all 0.2s ease-in-out',
                     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
@@ -138,22 +112,6 @@ const theme = createTheme({
                     boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',
                     textAlign: 'center',
                     transition: 'all 0.2s ease-in-out',
-                    '&::before': {
-                        content: '""',
-                        ...dropStyles,
-                        height: 80,
-                        width: 80,
-                        top: '8%',
-                        left: '-1.5%',
-                    },
-                    '&::after': {
-                        content: '""',
-                        ...dropStyles,
-                        height: 80,
-                        width: 80,
-                        bottom: '-14%',
-                        right: '3%',
-                    },
                 },
             },
         },
@@ -169,22 +127,6 @@ const theme = createTheme({
                     boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',
                     textAlign: 'center',
                     transition: 'all 0.2s ease-in-out',
-                    '&::before': {
-                        content: '""',
-                        ...cardDropStyles,
-                        height: 60,
-                        width: 60,
-                        bottom: '60px',
-                        right: '-10%',
-                    },
-                    '&::after': {
-                        content: '""',
-                        ...cardDropStyles,
-                        height: 40,
-                        width: 40,
-                        top: '12px',
-                        right: '-8px',
-                    },
                 },
             },
         },
@@ -205,7 +147,6 @@ const theme = createTheme({
                     borderTop: '1px solid rgba(255, 255, 255, 0.3)',
                     backdropFilter: 'blur(5px)',
                     boxShadow: '4px 4px 60px rgba(0, 0, 0, 0.2)',
-                    color: '#fff',
                     fontFamily: '"Montserrat", sans-serif',
                     fontWeight: 500,
                     transition: 'all 0.2s ease-in-out',
@@ -217,6 +158,9 @@ const theme = createTheme({
                     '&.Mui-focused': {
                         background: 'rgba(255, 255, 255, 0.1)',
                         boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderWidth: '1px',
+                        },
                     },
                     '& fieldset': {
                         borderColor: 'transparent',
@@ -224,6 +168,8 @@ const theme = createTheme({
                 },
                 input: {
                     color: '#fff',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    backdropFilter: 'blur(2px)',
                 },
             },
         },
@@ -233,7 +179,7 @@ const theme = createTheme({
                     '& .MuiOutlinedInput-root': {
                     },
                     '& .MuiInputLabel-root': {
-                        color: 'rgba(255, 255, 255, 0.7)',
+                        color: 'rgba(255, 255, 255, 0.75)',
                     },
                 },
             },
@@ -243,7 +189,7 @@ const theme = createTheme({
                 root: {
                     '&.MuiInputLabel-shrink': {
                         transform: 'translate(14px, -10px) scale(0.75)',
-                        // color: '#fff',
+                        color: '#fff',
                     },
                 },
             },
@@ -261,11 +207,11 @@ const theme = createTheme({
         MuiMenu: {
             styleOverrides: {
                 paper: {
-                    backgroundColor: '#ffffff',
-                    borderRadius: 8,
+                    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                    borderRadius: 4,
                     color: '#000',
                     boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-                    backdropFilter: 'none',
+                    backdropFilter: 'blur(10px)',
                     '&::before': {
                         display: 'none',
                     },
@@ -278,14 +224,14 @@ const theme = createTheme({
         MuiMenuItem: {
             styleOverrides: {
                 root: {
-                    color: '#ffffff',
+                    // color: '#ffffff',
                     '&:hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                        backgroundColor: 'rgba(0, 111, 234, 0.08)',
                     },
                     '&.Mui-selected': {
                         backgroundColor: 'rgba(50, 134, 134, 0.15)',
                         '&:hover': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                            backgroundColor: 'rgba(0, 111, 234, 0.12)',
                         },
                     },
                 },

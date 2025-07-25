@@ -1,7 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import Header from './Header';
-import { Box, Container, Paper } from '@mui/material';
+import { Box, Container, Button } from '@mui/material';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import AnimatedBackground from '../components/AnimatedBackground';
+import {BASE_PATH} from "../config/config.ts";
 
 export default function MainLayout() {
     return (
@@ -13,39 +15,28 @@ export default function MainLayout() {
             overflow: 'hidden',
             backgroundColor: 'rgba(255, 255, 255, 0.2)',
         }}>
+            <AnimatedBackground elementCount={6} />
             <Box 
                 sx={{
                     position: 'relative',
                     width: '100%',
-                    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                    backdropFilter: 'blur(10px)',
+                    backdropFilter: 'blur(2px)',
                     pt: 0
                 }}
             >
                 <Header />
                 
                 <Container maxWidth="lg" sx={{ pt: 2, pb: 6 }}>
-                    <Paper
-                        elevation={0}
-                        sx={{
-                            p: 2,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            backgroundColor: 'transparent',
-                        }}
-                    >
-                        <DotLottieReact
-                            src="/insura/car_scene.lottie"
-                            autoplay
-                            loop
-                            style={{ width: 300, margin: '0 auto' }}
-                        />
-                    </Paper>
+                    <DotLottieReact
+                        src="/insura/car_scene.lottie"
+                        autoplay
+                        loop
+                        style={{ maxWidth: 360, margin: '0 auto' }}
+                    />
                 </Container>
             </Box>
 
             <Container component="main" maxWidth="lg" sx={{
-                // backgroundColor: 'rgba(255, 255, 255, 0.2)',
                 flexGrow: 1,
                 display: 'flex',
                 flexDirection: 'column',
@@ -53,6 +44,18 @@ export default function MainLayout() {
             }}>
                 <Outlet />
             </Container>
+            
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+                <Button 
+                    component={Link}
+                    to={`${BASE_PATH}readme`}
+                    variant="contained" 
+                    color="primary"
+                    sx={{ minWidth: 120 }}
+                >
+                    ReadMe
+                </Button>
+            </Box>
         </Box>
     );
 }
