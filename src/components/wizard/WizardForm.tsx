@@ -19,7 +19,6 @@ import * as React from 'react';
 import CarWizard from './CarWizard';
 import MotoWizard from './MotoWizard';
 import HomeWizard from './HomeWizard';
-import { BASE_PATH } from '../../config/config';
 
 const stepsByType = {
     car: ['Vehicle Info', 'Owner Info', 'Review'],
@@ -109,7 +108,7 @@ export default function WizardForm() {
             setStep(nextStep);
             onStepChange(nextStep);
         } else {
-            navigate('/insura/thank-you');
+            navigate('thank-you');
         }
     };
 
@@ -295,7 +294,7 @@ export default function WizardForm() {
                     <Button
                         variant="outlined"
                         onClick={() => {
-                            navigate(BASE_PATH);
+                            navigate('/');
                         }}
                         sx={{
                             minWidth: 120,

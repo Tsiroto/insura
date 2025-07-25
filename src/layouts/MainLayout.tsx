@@ -3,7 +3,6 @@ import Header from './Header';
 import { Box, Container, Button } from '@mui/material';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import AnimatedBackground from '../components/AnimatedBackground';
-import {BASE_PATH} from "../config/config.ts";
 
 export default function MainLayout() {
     return (
@@ -48,7 +47,7 @@ export default function MainLayout() {
             <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
                 <Button 
                     component={Link}
-                    to={`${BASE_PATH}readme`}
+                    to="readme"
                     variant="contained" 
                     color="primary"
                     sx={{ minWidth: 120 }}

@@ -14,7 +14,7 @@ export default function WizardTypeSelector() {
     const navigate = useNavigate();
 
     const handleSelect = (type: string) => {
-        navigate(`/insura/${type}`);
+        navigate(`/${type}`);
     };
 
     return (

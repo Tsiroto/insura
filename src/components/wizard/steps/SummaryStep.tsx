@@ -1,4 +1,4 @@
-import { Box, Typography, SvgIconProps } from '@mui/material';
+import { Box, Typography, type SvgIconProps } from '@mui/material';
 import React from 'react';
 
 interface SummaryField {
