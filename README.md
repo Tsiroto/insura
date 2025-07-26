@@ -67,7 +67,7 @@ The development of Insura followed a structured approach:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/react-to-insurance.git
+   git clone https://github.com/Tsiroto/insura.git
    cd react-to-insurance
    ```
 
