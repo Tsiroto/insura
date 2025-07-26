@@ -2,6 +2,9 @@
 
 Insura is a sleek, user-friendly insurance quote application built with React and TypeScript. It offers a streamlined process for users to get personalized insurance quotes for vehicles (cars and motorcycles) and homes in just a few minutes.
 
+![Screenshot 1](./public/preview-1.jpg)
+![Screenshot 2](./public/preview-2.jpg)
+
 ## 🌟 Features
 
 - **Multi-insurance Support**: Get quotes for car, motorcycle, and home insurance
@@ -16,7 +19,7 @@ Insura is a sleek, user-friendly insurance quote application built with React an
 
 - **React 19**: Latest version of React with improved performance
 - **TypeScript**: For type safety and better developer experience
-- **Material UI 7**: Component library for consistent and beautiful UI
+- **Material UI 7**: Component library for a consistent and beautiful UI
 - **React Router 7**: For application routing
 - **React Hook Form**: For efficient form handling and validation
 - **Zustand**: Lightweight state management solution
@@ -49,7 +52,7 @@ The development of Insura followed a structured approach:
 1. **Initial Setup**: Set up the project with Vite, React, TypeScript, and Material UI
 2. **Routing**: Implemented routing with React Router
 3. **UI Design**: Created a modern glass-morphism design system
-4. **Form Structure**: Designed the multi-step wizard form structure
+4. **Form Structure**: Designed the multistep wizard form structure
 5. **State Management**: Implemented state management with Zustand
 6. **Form Validation**: Added validation with React Hook Form
 7. **Insurance Types**: Implemented specific forms for different insurance types
@@ -105,4 +108,4 @@ yarn build
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License—see the LICENSE file for details.

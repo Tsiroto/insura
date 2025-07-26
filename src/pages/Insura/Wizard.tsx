@@ -36,7 +36,7 @@ export default function Wizard() {
                     Welcome to Insura
                 </Typography>
                 <Typography variant="body1" color="text.secondary" fontSize="1.1rem">
-                    Get a personalised quote in just 5 minutes.
+                    Get a personalised quote in less than 5 minutes.
                 </Typography>
             </Paper>
             <WizardTypeSelector />
