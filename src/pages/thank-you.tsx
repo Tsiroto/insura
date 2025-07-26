@@ -2,14 +2,13 @@ import { useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useNavigate } from 'react-router-dom';
-import { BASE_PATH } from '../config/config.ts'; // adjust if needed
 
 export default function ThankYou() {
     const navigate = useNavigate();
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            navigate(BASE_PATH); // Auto-redirect to index after 6s
+            navigate("/");
         }, 6000);
         return () => clearTimeout(timeout);
     }, [navigate]);
@@ -32,7 +31,7 @@ export default function ThankYou() {
             <Button
                 variant="contained"
                 color="primary"
-                onClick={() => navigate(BASE_PATH)}
+                onClick={() => navigate("/")}
             >
                 Start Over
             </Button>

@@ -5,7 +5,6 @@ import type { FormFields } from '../../../types/form';
 interface ContactInfoStepProps {
     register: UseFormRegister<FormFields>;
     formState: UseFormStateReturn<FormFields>;
-    // For HomeWizard, the field is 'name', for others it's 'ownerName'
     nameField: 'name' | 'ownerName';
 }
 

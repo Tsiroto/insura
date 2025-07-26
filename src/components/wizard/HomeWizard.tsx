@@ -11,10 +11,10 @@ import { Controller } from 'react-hook-form';
 import type {
     UseFormRegister,
     UseFormStateReturn,
-    UseFormWatch,
     Control,
 } from 'react-hook-form';
 import type { FormFields } from '../../types/form';
+import { useFormStore } from '../../store/formStore';
 import ContactInfoStep from './steps/ContactInfoStep';
 import SummaryStep from './steps/SummaryStep';
 
@@ -22,7 +22,6 @@ interface HomeWizardProps {
     step: number;
     register: UseFormRegister<FormFields>;
     formState: UseFormStateReturn<FormFields>;
-    watch: UseFormWatch<FormFields>;
     control: Control<FormFields>;
 }
 
@@ -32,6 +31,7 @@ export default function HomeWizard({
     formState,
     control,
 }: HomeWizardProps) {
+    const { data } = useFormStore();
     if (step === 0) {
         return (
             <Stack spacing={2}>
@@ -69,6 +69,7 @@ export default function HomeWizard({
                         required: 'Required',
                         min: { value: 35, message: 'Min 35' },
                         max: { value: 200, message: 'Max 200' },
+                        valueAsNumber: true,
                     })}
                     error={!!formState.errors.squareMeters}
                     helperText={formState.errors.squareMeters?.message}
@@ -134,6 +135,7 @@ export default function HomeWizard({
                         required: 'Required',
                         min: { value: 1980, message: 'Min 1980' },
                         max: { value: 2025, message: 'Max 2025' },
+                        valueAsNumber: true,
                     })}
                     error={!!formState.errors.constructionYear}
                     helperText={formState.errors.constructionYear?.message}
@@ -156,7 +158,16 @@ export default function HomeWizard({
         return (
             <SummaryStep 
                 icon={<HomeIcon />}
-                message="No data to display (fields are cleared on navigation)."
+                fields={[
+                    { label: 'Property Type', value: data.propertyType },
+                    { label: 'Square Meters', value: data.squareMeters },
+                    { label: 'Ownership Status', value: data.ownershipStatus },
+                    { label: 'Usage', value: data.usage },
+                    { label: 'Construction Year', value: data.constructionYear },
+                    { label: 'Postal Code', value: data.postalCode },
+                    { label: 'Name', value: data.name },
+                    { label: 'Email', value: data.email }
+                ]}
             />
         );
     }

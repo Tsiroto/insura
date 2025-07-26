@@ -10,7 +10,7 @@ const ReadMe = () => {
     }, []);
 
     return (
-        <div style={{ padding: '2rem', maxWidth: '100%', margin: '0 auto 4rem auto', height: 'calc(100vh - 64px', overflowY: 'auto', lineHeight: '1.7' }}>
+        <div style={{ padding: '2rem', maxWidth: '100%', margin: '0 auto 4rem auto', height: 'calc(100vh - 64px', overflowY: 'auto', lineHeight: '1.7', zIndex: 1000, position: 'relative' }}>
             <ReactMarkdown>{markdown}</ReactMarkdown>
         </div>
     );

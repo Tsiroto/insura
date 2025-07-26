@@ -39,10 +39,9 @@ export default function Header() {
 
     return (
         <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
-            {/* Logo + Title */}
             <Box
                 component={Link}
-                to="/"    // now just "/", basename adds /insura
+                to="/"
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -72,7 +71,6 @@ export default function Header() {
                 </Typography>
             </Box>
 
-            {/* Projects Menu */}
             <Box display="flex" alignItems="center" gap={2}>
                 <Typography variant="h6" fontWeight={500} color="#fff">
                     Projects

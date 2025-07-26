@@ -1,16 +1,14 @@
 export interface FormFields {
-    // Car & Moto
     licensePlate?: string;
-    registrationYear?: string;
+    registrationYear?: number;
     ownerName?: string;
     email?: string;
 
-    // Home
     propertyType?: string;
-    squareMeters?: string;
+    squareMeters?: number;
     ownershipStatus?: string;
     usage?: string;
-    constructionYear?: string;
+    constructionYear?: number;
     postalCode?: string;
     name?: string;
 }

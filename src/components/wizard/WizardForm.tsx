@@ -1,5 +1,7 @@
+import * as React from 'react';
+import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useFormStore } from '../../store/formStore';
 import {
     Box,
     Button,
@@ -12,39 +14,59 @@ import {
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import HomeIcon from '@mui/icons-material/Home';
-import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+
 import type { FormFields } from '../../types/form';
-import * as React from 'react';
-import CarWizard from './CarWizard';
-import MotoWizard from './MotoWizard';
+import { useFormStore } from '../../store/formStore';
+import VehicleWizard from './VehicleWizard';
 import HomeWizard from './HomeWizard';
 
-const stepsByType = {
+function pick<
+    T extends object,
+    K extends readonly (keyof T)[]
+>(obj: T, keys: K): Partial<Pick<T, K[number]>> {
+    const out: Partial<Pick<T, K[number]>> = {};
+    keys.forEach((k) => {
+        out[k] = obj[k];
+    });
+    return out;
+}
+
+type WizardKind = 'car' | 'moto' | 'home';
+
+const stepsByType: Record<WizardKind, readonly string[]> = {
     car: ['Vehicle Info', 'Owner Info', 'Review'],
     moto: ['Vehicle Info', 'Owner Info', 'Review'],
     home: ['Property Info', 'Contact Info', 'Review'],
-};
+} as const;
 
-// helper to extract only relevant fields for each step
-const stepFields: Record<string, Record<number, (keyof FormFields)[]>> = {
+const stepFields: Record<WizardKind, Record<number, readonly (keyof FormFields)[]>> = {
     car: {
         0: ['licensePlate', 'registrationYear'],
         1: ['ownerName', 'email'],
+        2: [],
     },
     moto: {
         0: ['licensePlate', 'registrationYear'],
         1: ['ownerName', 'email'],
+        2: [],
     },
     home: {
-        0: ['propertyType', 'squareMeters', 'ownershipStatus', 'usage', 'constructionYear', 'postalCode'],
+        0: [
+            'propertyType',
+            'squareMeters',
+            'ownershipStatus',
+            'usage',
+            'constructionYear',
+            'postalCode',
+        ],
         1: ['name', 'email'],
+        2: [],
     },
-};
+} as const;
 
-function getStepData(all: FormFields, type: string, step: number): FormFields {
-    const keys = stepFields[type]?.[step] || [];
-    return Object.fromEntries(keys.map((k) => [k, all[k]])) as FormFields;
+function getStepData(all: FormFields, type: WizardKind, step: number) {
+    const keys = (stepFields[type]?.[step] ?? []) as readonly (keyof FormFields)[];
+    return pick(all, keys);
 }
 
 export default function WizardForm() {
@@ -54,10 +76,8 @@ export default function WizardForm() {
         trigger,
         reset,
         setFocus,
-        unregister,
         formState,
         control,
-        watch,
     } = useForm<FormFields>({
         shouldUnregister: true,
     });
@@ -66,49 +86,45 @@ export default function WizardForm() {
     const navigate = useNavigate();
     const { type, step, setType, setStep, updateData, data } = useFormStore();
 
-    // init once on mount
     useEffect(() => {
-        if (paramType) {
-            setType(paramType);
-            reset(getStepData(data, paramType, 0));
+        const valid: WizardKind[] = ['car', 'moto', 'home'];
+        if (!paramType || !valid.includes(paramType as WizardKind)) {
+            navigate('/');
+            return;
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        const kind = paramType as WizardKind;
+        setType(kind);
+        setStep(0);
+        reset(getStepData(data, kind, 0));
+    }, [paramType]);
 
-    // autofocus for fields per step
     useEffect(() => {
-        if (step === 0) setFocus('licensePlate');
-        if (step === 1) setFocus('ownerName');
-    }, [step, setFocus]);
+        if (type === 'home') {
+            if (step === 1) setFocus('name');
+        } else {
+            if (step === 0) setFocus('licensePlate');
+            if (step === 1) setFocus('ownerName');
+        }
+    }, [type, step, setFocus]);
 
-    const steps = stepsByType[type as keyof typeof stepsByType] || [];
+    const steps = stepsByType[type as WizardKind] ?? [];
 
     const onStepChange = (newStep: number) => {
-        const currentStepKeys = stepFields[type]?.[newStep] || [];
-        // Unregister all possible fields from all steps
-        const allPossibleKeys = Array.from(
-            new Set(Object.values(stepFields[type] || {}).flat())
-        );
-        allPossibleKeys.forEach((k) => {
-            if (!currentStepKeys.includes(k)) unregister(k);
-        });
-        // Only reset with the fields for the new step
-        const cleared: FormFields = {} as FormFields;
-        currentStepKeys.forEach((k) => {
-            cleared[k] = data[k] || '';
-        });
+        const keys = (stepFields[type as WizardKind]?.[newStep] ?? []) as readonly (keyof FormFields)[];
+        const cleared = pick(data, keys);
         reset(cleared);
     };
 
     const onSubmit = (formValues: FormFields) => {
         const merged = { ...data, ...formValues };
         updateData(merged);
+
         if (step < steps.length - 1) {
             const nextStep = step + 1;
             setStep(nextStep);
             onStepChange(nextStep);
         } else {
-            navigate('thank-you');
+            navigate('/thank-you');
         }
     };
 
@@ -116,9 +132,7 @@ export default function WizardForm() {
         if (e.key === 'Enter') {
             e.preventDefault();
             const isValid = await trigger();
-            if (isValid) {
-                await handleSubmit(onSubmit)();
-            }
+            if (isValid) await handleSubmit(onSubmit)();
         }
     };
 
@@ -129,12 +143,12 @@ export default function WizardForm() {
     };
 
     return (
-        <Box 
-            maxWidth="md" 
+        <Box
+            maxWidth="md"
             width="100%"
-            mx="auto" 
-            mt={4} 
-            px={3} 
+            mx="auto"
+            mt={4}
+            px={3}
             onKeyDown={handleKeyDown}
             sx={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -147,18 +161,16 @@ export default function WizardForm() {
                 transition: 'all 0.2s ease-in-out',
             }}
         >
-            <Box 
-                display="flex" 
-                justifyContent="center" 
-                alignItems="center" 
-                gap={2} 
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                gap={2}
                 mb={3}
-                sx={{
-                    p: 2,
-                }}
+                sx={{ p: 2 }}
             >
-                <Box 
-                    sx={{ 
+                <Box
+                    sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -176,20 +188,20 @@ export default function WizardForm() {
                 </Typography>
             </Box>
 
-            <Box 
-                sx={{ 
-                    p: 2, 
+            <Box
+                sx={{
+                    p: 2,
                     borderRadius: '10px',
                     backgroundColor: 'rgba(255, 255, 255, 0.3)',
                     backdropFilter: 'blur(10px)',
                     borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
                     borderTop: '1px solid rgba(255, 255, 255, 0.3)',
                     boxShadow: '10px 10px 20px -6px rgba(0, 0, 0, 0.2)',
-                    mb: 3
+                    mb: 3,
                 }}
             >
-                <Stepper 
-                    activeStep={step} 
+                <Stepper
+                    activeStep={step}
                     alternativeLabel
                     sx={{
                         '& .MuiStepConnector-line': {
@@ -230,22 +242,21 @@ export default function WizardForm() {
                 <LinearProgress
                     variant="determinate"
                     value={((step + 1) / steps.length) * 100}
-                    sx={{ 
+                    sx={{
                         mt: 2,
                         height: 8,
                         borderRadius: '10px',
                         backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
                         '& .MuiLinearProgress-bar': {
                             borderRadius: 10,
-                            backgroundColor: 'primary.main',
-                        }
+                            backgroundColor: '#4DA9FF',
+                        },
                     }}
                 />
             </Box>
 
-            <Box 
-                component="form" 
+            <Box
+                component="form"
                 mt={4}
                 sx={{
                     '& .MuiTextField-root': {
@@ -274,28 +285,29 @@ export default function WizardForm() {
                         width: '100%',
                         mx: 'auto',
                         display: 'block',
-                    }
+                    },
                 }}
             >
-                {(type === 'car' && (
-                        <CarWizard step={step} register={register} formState={formState} />
-                    )) ||
-                    (type === 'moto' && (
-                        <MotoWizard step={step} register={register} formState={formState} />
-                    )) ||
-                    (type === 'home' && (
-                        <HomeWizard step={step} register={register} formState={formState} control={control} watch={watch} />
-                    ))}
-                <Box
-                    mt={4}
-                    display="flex"
-                    justifyContent="space-between"
-                >
+                {(type === 'car' || type === 'moto') ? (
+                    <VehicleWizard
+                        step={step}
+                        register={register}
+                        formState={formState}
+                        kind={type as 'car' | 'moto'}
+                    />
+                ) : (
+                    <HomeWizard
+                        step={step}
+                        register={register}
+                        formState={formState}
+                        control={control}
+                    />
+                )}
+
+                <Box mt={4} display="flex" justifyContent="space-between">
                     <Button
                         variant="outlined"
-                        onClick={() => {
-                            navigate('/');
-                        }}
+                        onClick={() => navigate('/')}
                         sx={{
                             minWidth: 120,
                             fontWeight: 500,
@@ -313,11 +325,12 @@ export default function WizardForm() {
                             },
                             '&:active': {
                                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                            }
+                            },
                         }}
                     >
                         Start Over
                     </Button>
+
                     <Button
                         variant="contained"
                         onClick={handleSubmit(onSubmit)}
@@ -338,7 +351,7 @@ export default function WizardForm() {
                             '&:active': {
                                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
                                 boxShadow: '4px 4px 60px 8px rgba(0, 0, 0, 0.2)',
-                            }
+                            },
                         }}
                     >
                         {step === steps.length - 1 ? '✓ Submit' : 'Next →'}

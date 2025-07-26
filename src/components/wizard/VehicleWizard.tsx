@@ -1,6 +1,10 @@
 import { TextField, Stack } from '@mui/material';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import type { UseFormRegister, UseFormStateReturn } from 'react-hook-form';
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
+import type {
+    UseFormRegister,
+    UseFormStateReturn,
+} from 'react-hook-form';
 import type { FormFields } from '../../types/form';
 import { useFormStore } from '../../store/formStore';
 import ContactInfoStep from './steps/ContactInfoStep';
@@ -8,17 +12,19 @@ import SummaryStep from './steps/SummaryStep';
 
 const currentYear = new Date().getFullYear();
 
-interface CarWizardProps {
+interface VehicleWizardProps {
     step: number;
     register: UseFormRegister<FormFields>;
     formState: UseFormStateReturn<FormFields>;
+    kind: 'car' | 'moto';
 }
 
-export default function CarWizard({
-                                      step,
-                                      register,
-                                      formState,
-                                  }: CarWizardProps) {
+export default function VehicleWizard({
+    step,
+    register,
+    formState,
+    kind,
+}: VehicleWizardProps) {
     const { data } = useFormStore();
 
     if (step === 0) {
@@ -40,6 +46,7 @@ export default function CarWizard({
                         required: 'Required',
                         min: { value: 1980, message: 'Must be after 1979' },
                         max: { value: currentYear, message: `Cannot be after ${currentYear}` },
+                        valueAsNumber: true,
                     })}
                     error={!!formState.errors.registrationYear}
                     helperText={formState.errors.registrationYear?.message}
@@ -55,7 +62,7 @@ export default function CarWizard({
     if (step === 2) {
         return (
             <SummaryStep 
-                icon={<DirectionsCarIcon />}
+                icon={kind === 'car' ? <DirectionsCarIcon /> : <TwoWheelerIcon />}
                 fields={[
                     { label: 'License Plate', value: data.licensePlate },
                     { label: 'Registration Year', value: data.registrationYear },

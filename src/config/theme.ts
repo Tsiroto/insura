@@ -104,7 +104,6 @@ const theme = createTheme({
                 root: {
                     position: 'relative',
                     backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                    // padding: '3em',
                     borderRadius: '10px',
                     borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
                     borderTop: '1px solid rgba(255, 255, 255, 0.3)',
@@ -127,15 +126,6 @@ const theme = createTheme({
                     boxShadow: '20px 20px 40px -6px rgba(0, 0, 0, 0.2)',
                     textAlign: 'center',
                     transition: 'all 0.2s ease-in-out',
-                },
-            },
-        },
-        MuiAppBar: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
-                    borderBottom: 'none',
                 },
             },
         },
@@ -177,6 +167,20 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     '& .MuiOutlinedInput-root': {
+                        borderRadius: '10px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        backdropFilter: 'blur(5px)',
+                        '& fieldset': {
+                            borderColor: 'transparent',
+                            backgroundColor: 'rgba(255,255,255,0.15)',
+                        },
+                        '&:hover fieldset': {
+                            borderColor: 'primary.light',
+                        },
+                        '&.Mui-focused fieldset': {
+                            borderColor: 'primary.main',
+                        },
                     },
                     '& .MuiInputLabel-root': {
                         color: 'rgba(255, 255, 255, 0.75)',
@@ -224,7 +228,6 @@ const theme = createTheme({
         MuiMenuItem: {
             styleOverrides: {
                 root: {
-                    // color: '#ffffff',
                     '&:hover': {
                         backgroundColor: 'rgba(0, 111, 234, 0.08)',
                     },
