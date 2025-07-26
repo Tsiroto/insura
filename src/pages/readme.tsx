@@ -1,19 +1,25 @@
-import { useEffect, useState } from 'react';
+import PageFade from '../components/PageFade';
 import ReactMarkdown from 'react-markdown';
 import readmeText from '/README.md?raw';
 
-const ReadMe = () => {
-    const [markdown, setMarkdown] = useState('');
-
-    useEffect(() => {
-        setMarkdown(readmeText);
-    }, []);
+export default function ReadMe() {
+    const markdown = readmeText;
 
     return (
-        <div style={{ padding: '2rem', maxWidth: '100%', margin: '0 auto 4rem auto', height: 'calc(100vh - 64px', overflowY: 'auto', lineHeight: '1.7', zIndex: 1000, position: 'relative' }}>
+        <PageFade
+            durationMs={120}
+            delayMs={0}
+            sx={{
+                padding: '2rem',
+                maxWidth: '100%',
+                margin: '0 auto 4rem auto',
+                overflowY: 'auto',
+                lineHeight: 1.7,
+                zIndex: 1000,
+                position: 'relative',
+            }}
+        >
             <ReactMarkdown>{markdown}</ReactMarkdown>
-        </div>
+        </PageFade>
     );
-};
-
-export default ReadMe;
+}

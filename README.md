@@ -30,7 +30,7 @@ react-to-insurance/
 ├── public/              # Static assets
 ├── src/
 │   ├── components/      # Reusable UI components
-│   │   ├── wizard/      # Wizard components for different insurance types
+│   │   ├── wizard/      # Wizard for different insurance types
 │   │   │   └── steps/   # Individual step components for the wizards
 │   ├── config/          # Configuration files
 │   ├── layouts/         # Layout components

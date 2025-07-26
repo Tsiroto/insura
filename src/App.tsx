@@ -5,7 +5,7 @@ import WizardForm from './components/wizard/WizardForm';
 import ThankYou from './pages/thank-you';
 import ReadMe from './pages/readme';
 
-function App() {
+export default function App() {
     return (
         <Routes>
             <Route path="/" element={<MainLayout />}>
@@ -17,5 +17,3 @@ function App() {
         </Routes>
     );
 }
-
-export default App;
